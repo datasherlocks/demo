@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  sherlock:
+    image: ghcr.io/datasherlocks/sherlock:v0.0.15
+    command: serve --config /src/config.yaml
+    restart: always
+    env_file:
+      - .env
+    link:
+    - database
+    environment:
+    - DB_PASSWORD: college
+    depends_on:
+    - database
+    expose:
+      - 8080
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./config.yaml:/src/config.yaml
+    networks:
+      - proxynet
+
+  tunnel:
+    image: cloudflare/cloudflared:2022.6.3
+    restart: always
+    links: 
+      - sherlock
+    depends_on:
+    - database
+    - sherlock
+    command: ["tunnel", "--no-autoupdate", "--loglevel", "debug", "run", "--token", "$TUNNEL_TOKEN", "--url", "http://sherlock:8080"]
+    env_file:
+      - .env
+    networks:
+      - proxynet
+
+  database:
+    image: genschsa/mysql-employees
+    restart: always
+    expose:
+      - 3306
+    ports:
+      - '3306:3306'
+    environment:
+    - MYSQL_ROOT_PASSWORD: college
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    driver: bridge

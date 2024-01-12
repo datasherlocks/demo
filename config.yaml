@@ -1,0 +1,7 @@
+type: "mysql"
+database:
+  host: "127.0.0.1"
+  username: "root"
+  port: 3306
+  database: "employees"
+  ssl: false
