@@ -1,5 +1,6 @@
 name: Database Sync
 on:
+  workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *"
 
@@ -7,7 +8,7 @@ jobs:
   mysql:
     runs-on: ubuntu-latest
     steps:
-      - uses: datasherlocks/sherlock-setup-action@main
+      - uses: datasherlocks/sherlock-setup-action@master
       - name: Sync Database schema
         run: sherlock register -c config/mysql.yaml --name employees
         env:
@@ -16,7 +17,7 @@ jobs:
   postgres:
     runs-on: ubuntu-latest
     steps:
-      - uses: datasherlocks/sherlock-setup-action@main
+      - uses: datasherlocks/sherlock-setup-action@master
       - name: Sync Da tabase schema
         run: sherlock register -c config/postgres.yaml --name store
         env:
