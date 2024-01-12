@@ -10,15 +10,15 @@ jobs:
       - uses: datasherlocks/sherlock-setup-action@main
       - name: Sync Database schema
         run: sherlock register -c config/mysql.yaml --name employees
-       env:
+        env:
            DS_API_KEY: ${{ secrets.DS_API_KEY }}
            DB_PASSWORD: ${{ secrets.DB_PASSWORD_MYSQL }}
   postgres:
     runs-on: ubuntu-latest
     steps:
       - uses: datasherlocks/sherlock-setup-action@main
-      - name: Sync Database schema
+      - name: Sync Da tabase schema
         run: sherlock register -c config/postgres.yaml --name store
-       env:
+        env:
            DS_API_KEY: ${{ secrets.DS_API_KEY }}
            DB_PASSWORD: ${{ secrets.DB_PASSWORD_POSTGRES }}
