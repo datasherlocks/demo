@@ -8,6 +8,7 @@ jobs:
   mysql:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.1
       - run: curl -sL https://raw.githubusercontent.com/datasherlocks/sherlock/main/install.sh |  sudo bash -s -- -b ./bin
       - name: Sync Database schema
         run: ./bin/sherlock register -c config/mysql.yaml --name employees
@@ -17,6 +18,7 @@ jobs:
   postgres:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.1
       - run: curl -sL https://raw.githubusercontent.com/datasherlocks/sherlock/main/install.sh |  sudo bash -s -- -b bin
       - name: Sync Da tabase schema
         run: ./bin/sherlock register -c config/postgres.yaml --name store
